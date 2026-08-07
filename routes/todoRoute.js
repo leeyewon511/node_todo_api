@@ -74,56 +74,65 @@ const todolist = [
   }
 ];
 
-// // 전체조회 & 필터링
-// router.get('/', (req, res) => {
-//     const {done} = req.query;
+// 전체조회 & 필터링
+router.get('/', (req, res) => {
+    const {done} = req.query;
 
-//     if(done){
-//         const doneTrue = (done === 'true'); 
-//         const todolistFilter = todolist.filter(todo => todo.done === doneTrue);
-//        return res.json(todolistFilter);
-//     }
-//     res.json(todolist);
-// })
+    if(done){
+        const doneTrue = (done === 'true'); 
+        const todolistFilter = todolist.filter(todo => todo.done === doneTrue);
+       return res.json(todolistFilter);
+    }
+    res.json(todolist);
+})
 
-// // 단일 조회
-// router.get('/:id', (req, res) => {
-//     const id = Number(req.params.id);
-//     const todo = todolist.find(todo => todo.id === id );
+// 단일 조회
+router.get('/:userId', (req, res) => {
+    const userId = Number(req.params.userId)
 
-//     console.log(todo);
-//     res.json(todo);
-// })
+    const userTodo = todolist.filter(u => u.userId === userId)
 
-// // 생성
-//  router.post('/', (req, res) => {
-//     const newTodo = req.body;
+    console.log(userTodo)
+    res.json(userTodo)
 
-//     todolist.push(newTodo);
+    // const id = Number(req.params.id);
+    // const todo = todolist.find(todo => todo.id === id );
 
-//     console.log(todolist);
-//     res.json(todolist);
-//  })
+    // console.log(todo);
+    // res.json(todo);
 
-//  // todo 완료처리
-// router.put('/:id', (req, res) => {
-//     const id = Number(req.params.id);
+})
 
-//     const todo = todolist.find(todo => todo.id === id);
+// 생성
+ router.post('/', (req, res) => {
+    const newTodo = req.body;
 
-//     todo.done = !todo.done;
+    todolist.push(newTodo);
 
-//     console.log(todo);
-//     res.send(todo);
-// })
+    console.log(todolist);
+    res.json(todolist);
+ })
 
-// // 삭제
-// router.delete('/:id', (req, res) => {
-//     const id = Number(req.params.id);
+ // todo 완료처리
+router.put('/:id', (req, res) => {
+    const id = Number(req.params.id);
 
-//     const todo = todolist.filter(todo => todo.id !== id);
+    const todo = todolist.find(todo => todo.id === id);
 
-//     res.json(todo);
-// })
+    todo.done = !todo.done;
+
+    console.log(todo);
+    res.send(todo);
+})
+
+// 삭제
+router.delete('/:id', (req, res) => {
+    const id = Number(req.params.id);
+
+    const todo = todolist.filter(todo => todo.id !== id);
+
+    res.json(todo);
+})
 
 module.exports = router;
+module.exports.todolist = todolist;

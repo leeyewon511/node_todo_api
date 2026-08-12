@@ -1,20 +1,30 @@
-const express = require('express');
-const app = express();  //express를 실행해서 서버 애플리케이션 객체(app)를 생성함을 의미.
-const port = 3000;
-const todoRoute = require("./routes/todoRoute");
-const userRoute = require("./routes/userRoute");
-const postRoute = require("./routes/postRoute");
-const productsRoute = require("./routes/productsRoute")
+const express = require('express')
+const app = express()
+const port = 3000
 
-app.use(express.json());
-app.use(express.urlencoded({express : false}));
+const todolistRoute = require('./routes/sampleRoutes/todolistRoute')
+const userRoute = require('./routes/sampleRoutes/userRoute')
+const postRoute = require('./routes/sampleRoutes/postRoute')
+const productRoute = require('./routes/sampleRoutes/productsRoute') // 
+const usertodoRoute = require('./routes/sampleRoutes/usertodoRoute')
 
-app.use('/todolist', todoRoute);
-app.use('/users', userRoute);
-app.use('/posts', postRoute);
-app.use('/products', productsRoute);
+const todos = require('./routes/todos')
+const users = require('./routes/users')
+const posts = require('./routes/posts')
+
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }));
+
+app.use('/todolist', todolistRoute)
+app.use('/user', userRoute)
+app.use('/post', postRoute)
+app.use('/product', productRoute)
+app.use('/visitor', usertodoRoute)
+
+app.use('/posts', posts)
+app.use('/todos', todos)
+app.use('/users', users)
 
 app.listen(port, () => {
-    console.log('실행됨')
+    console.log('서버 실행 중')
 })
-
